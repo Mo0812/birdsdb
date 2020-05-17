@@ -1,6 +1,7 @@
-(ns password-safe.core)
+(ns password-safe.core
+  (:require [password-safe.database.service :as db])
+  (:gen-class))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+(defn -main []
+  (println "initializing db...")
+  (db/init!))
