@@ -20,7 +20,7 @@
 
 (defn watch-db [db]
   (add-watch db :watcher (fn [key ref old-state new-state]
-                           (write-db-dump "db-new.json" new-state))))
+                           (write-db-dump db-path new-state))))
 
 (defn generate-id [item]
   (let [id (java.util.UUID/randomUUID)]

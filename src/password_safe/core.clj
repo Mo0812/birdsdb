@@ -1,7 +1,9 @@
 (ns password-safe.core
-  (:require [password-safe.database.service :as db])
+  (:require [password-safe.database.service :as service])
+  (:require [password-safe.interface.core :as interface])
   (:gen-class))
 
-(defn -main []
-  (println "initializing db...")
-  (db/init!))
+(defn -main [& args]
+  (println "args are: " args)
+  (service/init!)
+  (interface/execute args))

@@ -15,10 +15,10 @@
                 :id (gen/one-of [gen/uuid gen/string])))
 
 (deftest read-db-dump-test
-  (is (read-db-dump db-path) test-state))
+  (is (read-db-dump "db-test-in.json") test-state))
 
 (deftest write-db-dump-test
-  (let [db-test-path "db-test.json"]
+  (let [db-test-path "db-test-out.json"]
     (clojure.java.io/delete-file db-test-path true)
     (write-db-dump db-test-path test-state)
     (is (slurp db-path) (slurp db-test-path))))

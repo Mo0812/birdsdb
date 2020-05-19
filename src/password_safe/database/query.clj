@@ -1,7 +1,6 @@
 (ns password-safe.database.query
   (:require
    [clojure.spec.alpha :as s]
-   [clojure.spec.test.alpha :as stest]
    [password-safe.database.filter :as filter]
    [password-safe.database.spec :as spec]))
 

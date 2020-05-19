@@ -1,14 +1,1 @@
-[
-    {
-        "title": "asos.com",
-        "username": "ulf",
-        "password": "abc",
-        "id": "bc1ccf0c-815b-4099-b02c-703acd3fc29f"
-    },
-    {
-        "title": "youtube.com",
-        "username": "robert",
-        "password": "Password123",
-        "id": "220af2f7-99a5-42e6-9785-7af7d2fcb098"
-    }
-]
+[{"title":"asos.com","username":"ulf","password":"abc","id":"bc1ccf0c-815b-4099-b02c-703acd3fc29f"},{"title":"youtube.com","username":"robert","password":"Password123","id":"220af2f7-99a5-42e6-9785-7af7d2fcb098"}]
