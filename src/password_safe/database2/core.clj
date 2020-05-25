@@ -19,7 +19,10 @@
      (alter db into current-state))))
 
 (defn add! [entry]
-  (let [[id db-entry] (create-db-entry entry)]
+  (let [[id db-entry] (create-db-entry entry)
+        deleted (:deleted db-entry)]
     (dosync
-     (alter db assoc id db-entry)
-     (io/write-db-dump io/db-path [db-entry]))))
+     (if deleted
+       (alter db dissoc db id)
+       (alter db assoc id db-entry))
+     (io/save io/db-path [db-entry]))))
