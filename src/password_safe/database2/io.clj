@@ -11,7 +11,9 @@
 
 (defn process-chunk [path chunk]
   (let [chunk-contents (for [file-id chunk]
-                         (flatten (json/read-str (slurp (io/file path (str file-id ".json"))))))]
+                         (flatten (json/read-str (slurp (io/file path (str file-id ".json"))) :key-fn keyword)))]
+    (println "flatten: " (flatten chunk-contents))
+    (println "original: " chunk-contents)
     (try
       (write-db-data path (flatten chunk-contents) (str "chunk-" (java.util.UUID/randomUUID)))
       (for [file-id chunk]
@@ -34,7 +36,6 @@
              (map
               (fn [item]
                 (let [id (:id item)]
-                  (println id)
                   (assoc item :id (java.util.UUID/fromString id))))
               (json/read-str (slurp f)
                              :key-fn keyword)))))
@@ -43,9 +44,12 @@
   ([path coll]
    (write-db-data path coll (java.util.UUID/randomUUID)))
   ([path coll id]
+   (println "coll: " coll)
    (spit (io/file path (str id ".json"))
          (json/write-str
-          (map #(update % :id str) coll)))))
+          (map #(do
+                  (println "possible id: " (:id %))
+                  (update % :id str)) coll)))))
 
 (defn save [path coll]
   (let [file-id (java.util.UUID/randomUUID)]
