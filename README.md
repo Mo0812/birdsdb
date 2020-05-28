@@ -1,6 +1,8 @@
 # password-safe
 
-FIXME: description
+`password-safe` is a terminal based password management software written in Clojure. It is build upon a custom object database. That database is not only the fundation but also the main focus of creating this project.
+
+The object based information are basically stored in a JSON representation on the disk, seperated in fixed-sized chunks. To not always read the entire file-based information ...
 
 ## Installation
 
@@ -24,13 +26,9 @@ FIXME: listing of options this app accepts.
 
 ...
 
-### Any Other Sections
-### That You Think
-### Might be Useful
-
 ## License
 
-Copyright © 2020 FIXME
+Copyright © 2020 Moritz Kanzler
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
