@@ -17,7 +17,9 @@
     (try
       (write-db-data path (flatten chunk-contents) (str "chunk-" (java.util.UUID/randomUUID)))
       (for [file-id chunk]
-        (io/delete-file (io/file path (str file-id ".json"))))
+        (do 
+            (println "deleting:" file-id)
+            (io/delete-file (io/file path (str file-id ".json")))))
       (catch Exception e
         (println e)))))
 
