@@ -2,7 +2,7 @@
 
 `password-safe` is a terminal based password management software written in Clojure. It is build upon a custom object database. That database is not only the fundation but also the main focus of creating this project.
 
-The object based information are basically stored in a JSON representation on the disk, seperated in fixed-sized chunks. To not always read the entire file-based information ...
+The object based information are basically stored in a JSON representation on the disk, seperated in fixed-sized chunks. To not always read the entire file-based information ...!
 
 ## Installation
 
