@@ -1,6 +1,7 @@
 (ns password-safe.database2.io
   (:require [clojure.data.json :as json]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [taoensso.timbre :as timbre]))
 
 (def db-path "db")
 (def chunk-size 2)
@@ -10,18 +11,19 @@
 (declare write-db-data)
 
 (defn process-chunk [path chunk]
+  (timbre/info "processing chunk:" chunk)
   (let [chunk-contents (for [file-id chunk]
                          (flatten (json/read-str (slurp (io/file path (str file-id ".json"))) :key-fn keyword)))]
-    (println "flatten: " (flatten chunk-contents))
-    (println "original: " chunk-contents)
+    (timbre/info "chunk contents:" chunk-contents)
     (try
+      (timbre/info "try to write" chunk "in chunk")
       (write-db-data path (flatten chunk-contents) (str "chunk-" (java.util.UUID/randomUUID)))
       (catch Exception e
+        (timbre/error "Can not write" chunk "in chunk")
         (println e))))
-  (for [file-id chunk]
-    (do 
-      (println "deleting:" file-id)
-      (io/delete-file (io/file path (str file-id ".json")))))
+  (doseq [file-id chunk]
+    (timbre/info "deleting:" file-id)
+    (io/delete-file (io/file path (str file-id ".json"))))
 )
 
 (defn watch-collector [path collector]
@@ -30,6 +32,8 @@
                (when (> (count new-state) chunk-size)
                  (let [new-chunk (take chunk-size new-state)
                        rest (drop chunk-size new-state)]
+                    (timbre/info "new-chunk:" new-chunk)
+                    (timbre/info "rest of chunk:" rest)
                    (reset! collector rest)
                    (process-chunk path new-chunk))))))
 
@@ -50,9 +54,7 @@
    (println "coll: " coll)
    (spit (io/file path (str id ".json"))
          (json/write-str
-          (map #(do
-                  (println "possible id: " (:id %))
-                  (update % :id str)) coll)))))
+          (map #(update % :id str) coll)))))
 
 (defn save [path coll]
   (let [file-id (java.util.UUID/randomUUID)]

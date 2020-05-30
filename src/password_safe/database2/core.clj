@@ -1,5 +1,6 @@
 (ns password-safe.database2.core
-  (:require [password-safe.database2.io :as io]))
+  (:require [password-safe.database2.io :as io]
+            [taoensso.timbre :as timbre]))
 
 (def db (ref {}))
 
