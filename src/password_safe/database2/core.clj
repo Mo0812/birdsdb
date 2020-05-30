@@ -1,6 +1,6 @@
 (ns password-safe.database2.core
-  (:require [password-safe.database2.io :as io]
-            [taoensso.timbre :as timbre]))
+  (:require [taoensso.timbre :as timbre]
+            [password-safe.database2.io :as io]))
 
 (def db (ref {}))
 
@@ -22,8 +22,11 @@
 (defn add! [entry]
   (let [[id db-entry] (create-db-entry entry)
         deleted (:deleted db-entry)]
-    (dosync
-     (if deleted
-       (alter db dissoc db id)
-       (alter db assoc id db-entry))
-     (io/save io/db-path [db-entry]))))
+    (.start (Thread. (fn []
+                       (try
+                         (io/save io/db-path [db-entry])
+                         (dosync (if deleted
+                                   (alter db dissoc db id)
+                                   (alter db assoc id db-entry)))
+                         (catch Exception e
+                           (timbre/error e))))))))
