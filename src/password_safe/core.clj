@@ -7,7 +7,7 @@
 
 (defn -main [& args]
   (println "args are: " args)
-  (log/load-config)
+  (log/init)
   ;; (service/init!)
   ;; (interface/execute args)
   )

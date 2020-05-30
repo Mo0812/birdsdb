@@ -1,0 +1,7 @@
+{:logging {:enabled? false
+           :clean-logs? true
+           :print-logs? false
+           :output-path "db.log"
+           :output-level :debug}
+ :db {:io {:db-path "db"
+           :chunk-size 2}}}

@@ -1,10 +1,18 @@
 (ns password-safe.database2.io
   (:require [clojure.data.json :as json]
             [clojure.java.io :as io]
-            [password-safe.logger.logger :as log]))
+            [password-safe.logger.logger :as log]
+            [config.core :refer [env]]))
 
-(def db-path "db")
-(def chunk-size 2)
+(def db-path (-> env
+                 :db
+                 :io
+                 :db-path))
+
+(def chunk-size (-> env
+                    :db
+                    :io
+                    :chunk-size))
 
 (def collector (atom #{}))
 

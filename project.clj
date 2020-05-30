@@ -6,9 +6,11 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [org.clojure/data.json "1.0.0"]
                  [org.clojure/test.check "1.0.0"]
-                 [com.taoensso/timbre "4.10.0"]]
+                 [com.taoensso/timbre "4.10.0"]
+                 [yogthos/config "1.1.7"]]
   :main ^:skip-aot password-safe.core
   :repl-options {:init-ns password-safe.core
                  :init (-main)}
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :dev {:resource-paths ["env/dev/config"]}})
