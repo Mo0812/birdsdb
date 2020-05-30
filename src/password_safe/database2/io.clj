@@ -16,12 +16,13 @@
     (println "original: " chunk-contents)
     (try
       (write-db-data path (flatten chunk-contents) (str "chunk-" (java.util.UUID/randomUUID)))
-      (for [file-id chunk]
-        (do 
-            (println "deleting:" file-id)
-            (io/delete-file (io/file path (str file-id ".json")))))
       (catch Exception e
-        (println e)))))
+        (println e))))
+  (for [file-id chunk]
+    (do 
+      (println "deleting:" file-id)
+      (io/delete-file (io/file path (str file-id ".json")))))
+)
 
 (defn watch-collector [path collector]
   (add-watch collector :watch-collector
