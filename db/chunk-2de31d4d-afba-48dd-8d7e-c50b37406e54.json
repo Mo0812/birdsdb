@@ -12,12 +12,5 @@
         "password": "Password123",
         "id": "220af2f7-99a5-42e6-9785-7af7d2fcb098",
         "ts": 1590184764412
-    },
-    {
-        "title": "facebook.com",
-        "username": "john",
-        "password": "abcdefgh123",
-        "id": "e70c1425-a25d-48ff-b889-f1bc91ead4d2",
-        "ts": 1590244489576
     }
 ]

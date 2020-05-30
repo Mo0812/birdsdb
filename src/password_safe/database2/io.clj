@@ -1,7 +1,7 @@
 (ns password-safe.database2.io
-  (:require [taoensso.timbre :as timbre]
-            [clojure.data.json :as json]
-            [clojure.java.io :as io]))
+  (:require [clojure.data.json :as json]
+            [clojure.java.io :as io]
+            [password-safe.logger.logger :as log]))
 
 (def db-path "db")
 (def chunk-size 2)
@@ -11,23 +11,22 @@
 (declare write-db-data)
 
 (defn process-chunk [path chunk]
-  (timbre/info "processing chunk:" (pr-str chunk))
+  (log/log :info "processing chunk:" (pr-str chunk))
   (let [chunk-contents (for [file-id chunk]
                          (flatten (json/read-str (slurp (io/file path (str file-id ".json"))) :key-fn keyword)))]
-    (timbre/info "chunk contents:" (pr-str chunk-contents))
+    (log/log :info "chunk contents:" (pr-str chunk-contents))
     (try
-      (timbre/info "try to write" (pr-str chunk) "in chunk")
+      (log/log :info "try to write" (pr-str chunk) "in chunk")
       (write-db-data path (flatten chunk-contents) (str "chunk-" (java.util.UUID/randomUUID)))
       (doseq [file-id chunk]
-        (timbre/info "deleting:" file-id)
+        (log/log :info "deleting:" file-id)
         (io/delete-file (io/file path (str file-id ".json"))))
       (catch java.io.FileNotFoundException e
         (swap! collector #(apply conj % chunk))
-        (timbre/error e))
+        (log/log :error e))
       (catch Exception e
-        (timbre/error "Can not write" (pr-str chunk) "in chunk")
-        (timbre/error "Exception" e)
-        (println e)))))
+        (log/log :error "Can not write" (pr-str chunk) "in chunk")
+        (log/log :error e)))))
 
 (defn watch-collector [path]
   (add-watch collector :watch-collector
@@ -35,8 +34,8 @@
                (when (> (count new-state) chunk-size)
                  (let [new-chunk (take chunk-size new-state)
                        rest (drop chunk-size new-state)]
-                   (timbre/info "new-chunk:" (pr-str new-chunk))
-                   (timbre/info "rest of chunk:" (pr-str rest))
+                   (log/log :info "new-chunk:" (pr-str new-chunk))
+                   (log/log :info "rest of chunk:" (pr-str rest))
                    (reset! collector rest)
                    (.start (Thread. (fn []
                                       (process-chunk path new-chunk)))))))))
@@ -55,7 +54,6 @@
   ([path coll]
    (write-db-data path coll (java.util.UUID/randomUUID)))
   ([path coll id]
-   (println "coll: " coll)
    (spit (io/file path (str id ".json"))
          (json/write-str
           (map #(update % :id str) coll)))))
@@ -66,7 +64,7 @@
       (write-db-data path coll file-id)
       (swap! collector conj file-id)
       (catch Exception e
-        (timbre/error e)
+        (log/log :error e)
         (throw e)))))
 
 (defn receive-all [path]
