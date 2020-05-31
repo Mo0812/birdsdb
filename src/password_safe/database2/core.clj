@@ -12,12 +12,13 @@
         deleted (if (nil? (:deleted entry))
                   false
                   (:deleted entry))]
-    [id (assoc entry :id id :ts ts :deleted deleted)]))
+    [id (assoc {} :id id :ts ts :deleted deleted :object (dissoc entry :id :ts :deleted))]))
 
 (defn init! []
   (let [current-state (io/receive-current-state io/db-path)]
     (dosync
-     (alter db into current-state))))
+     (alter db into (for [[id db-entry] current-state]
+                      [id (:object db-entry)])))))
 
 (defn add! [entry]
   (let [[id db-entry] (create-db-entry entry)
@@ -27,6 +28,6 @@
                          (io/save io/db-path [db-entry])
                          (dosync (if deleted
                                    (alter db dissoc db id)
-                                   (alter db assoc id db-entry)))
+                                   (alter db assoc id (:object db-entry))))
                          (catch Exception e
                            (timbre/error e))))))))

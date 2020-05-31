@@ -4,10 +4,11 @@
 (defn insert [item]
   (db/add! item))
 
-(defn update [item]
-  (db/add! item))
+(defn update [id item]
+  (db/add! (assoc item :id id)))
 
-(defn delete [item]
-  (db/add! (assoc item :deleted true)))
+(defn delete [id item]
+  (db/add! (assoc item :id id :deleted true)))
 
-(defn select [])
+(defn select []
+  @db/db)
