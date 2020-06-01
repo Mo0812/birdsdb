@@ -30,7 +30,7 @@
         nil
         (let [msg-in (receive sock)
               msg-out (handler msg-in)]
-            (send sock msg-out)
+            (.start (Thread. (fn [] (send sock msg-out))))
             (recur))))))
           
 (defn start []
