@@ -1,14 +1,14 @@
 (ns password-safe.database2.ql
-  (:require [password-safe.database2.core :as db]))
+  (:require [password-safe.database2.db :as db]))
 
 (defn insert [item]
-  (db/add! item))
+  (db/add! {:object item}))
 
 (defn update [id item]
-  (db/add! (assoc item :id id)))
+  (db/add! {:id id :object item}))
 
-(defn delete [id item]
-  (db/add! (assoc item :id id :deleted true)))
+(defn delete [id]
+  (db/add! {:id id :deleted true}))
 
 (defn select []
   @db/db)

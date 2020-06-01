@@ -1,5 +1,5 @@
-(ns password-safe.database2.core
-  (:require [taoensso.timbre :as timbre]
+(ns password-safe.database2.db
+  (:require [password-safe.logger.logger :as log]
             [password-safe.database2.io :as io]))
 
 (def db (ref {}))
@@ -11,8 +11,9 @@
         ts (System/currentTimeMillis)
         deleted (if (nil? (:deleted entry))
                   false
-                  (:deleted entry))]
-    [id (assoc {} :id id :ts ts :deleted deleted :object (dissoc entry :id :ts :deleted))]))
+                  (:deleted entry))
+        object (:object entry)]
+    [id (assoc {} :id id :ts ts :deleted deleted :object object)]))
 
 (defn init! []
   (let [current-state (io/receive-current-state io/db-path)]
@@ -30,4 +31,4 @@
                                    (alter db dissoc db id)
                                    (alter db assoc id (:object db-entry))))
                          (catch Exception e
-                           (timbre/error e))))))))
+                           (log/log :error e))))))))
