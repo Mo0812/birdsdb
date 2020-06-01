@@ -6,5 +6,5 @@
                       (chars-between \a \z)
                       (chars-between \A \Z)
                       [\_])
-        password (take len (repeatedly #(rand-nth chars)))]
+        password (take (Integer/parseInt len) (repeatedly #(rand-nth chars)))]
     (reduce str password)))

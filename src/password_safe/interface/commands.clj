@@ -12,10 +12,10 @@
   (generator/generate-password len))
 
 (defmethod interface-commands :default [cmd args]
-
   (str "The cmd '" cmd "' is not supported or misspelled, please try again or use 'help' for showing the available commands"))
 
 (defn execute
   ([cmd & args]
-   (println "getting: " cmd args)
-   (println (interface-commands cmd args))))
+   (println "getting:" cmd args)
+   (println "result:" (interface-commands cmd args))
+   (interface-commands cmd args)))
