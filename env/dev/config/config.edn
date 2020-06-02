@@ -4,4 +4,5 @@
            :output-path "db.log"
            :output-level :debug}
  :db {:io {:db-path "db"
-           :chunk-size 2}}}
+           :chunk-size 2}}
+ :server {:port 50937}}

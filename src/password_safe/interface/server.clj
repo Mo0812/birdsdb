@@ -1,6 +1,7 @@
 (ns password-safe.interface.server
   (:require [password-safe.interface.commands :as commands]
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [config.core :refer [env]])
   (:import [java.net ServerSocket]))
 
 (declare serve start stop)
@@ -9,7 +10,9 @@
 
 (def server-thread
   (Thread. (fn []
-             (serve 8080))))
+             (serve (-> env
+                        :server
+                        :port)))))
 
 (defn receive
   "Read a line of textual data from the given socket"
