@@ -2,11 +2,15 @@
   (:require [password-safe.interface.commands :as commands]
             [clojure.java.io :as io])
   (:import [java.net ServerSocket]))
-  
-(declare serve)
-  
-(defonce server-thread (Thread. (fn [] (serve 8080))))
-  
+
+(declare serve start stop)
+
+(def server-state (atom nil))
+
+(def server-thread
+  (Thread. (fn []
+             (serve 8080))))
+
 (defn receive
   "Read a line of textual data from the given socket"
   [socket]
@@ -16,9 +20,9 @@
   "Send the given string message out over the given socket"
   [socket msg]
   (let [writer (io/writer socket)]
-      (.write writer msg)
-      (.flush writer)))
-      
+    (.write writer msg)
+    (.flush writer)))
+
 (defn handler [msg-in]
   (str (apply commands/execute (clojure.string/split msg-in #" "))))
 
@@ -28,13 +32,20 @@
     (loop []
       (if (Thread/interrupted)
         nil
-        (let [msg-in (receive sock)
-              msg-out (handler msg-in)]
-            (.start (Thread. (fn [] (send sock msg-out))))
-            (recur))))))
-          
+        (let [msg-in (receive sock)]
+          (.start (Thread. (fn [] (send sock (handler msg-in)))))
+          (recur))))))
+
 (defn start []
-  (.start server-thread))
-  
+  (stop)
+  (println "init server...")
+  (reset! server-state server-thread)
+  (println "starting server...")
+  (.start @server-state))
+
 (defn stop []
-  (.interrupt server-thread))
+  (println "stopping server...")
+  (when-not (nil? @server-state)
+    (println "interrputing thread...")
+    (.interrupt @server-state))
+  (reset! server-state nil))
