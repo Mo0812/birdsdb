@@ -6,7 +6,7 @@
     (if (= in "exit")
       (println "Bye bye")
       (do
-        (apply commands/execute (clojure.string/split in #" "))
+        (println (commands/execute in))
         (recur (read-line))))))
 
 (defn start []

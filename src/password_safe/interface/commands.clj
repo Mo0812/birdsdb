@@ -14,8 +14,12 @@
 (defmethod interface-commands :default [cmd args]
   (str "The cmd '" cmd "' is not supported or misspelled, please try again or use 'help' for showing the available commands"))
 
-(defn execute
+(defn execute-command
   ([cmd & args]
-   (println "getting:" cmd args)
-   (println "result:" (interface-commands cmd args))
    (interface-commands cmd args)))
+
+(defn execute [cmd]
+  (cond
+    (string? cmd) (apply execute-command (clojure.string/split cmd #" "))
+    (vector? cmd) (apply execute-command cmd)))
+

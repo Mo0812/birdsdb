@@ -24,7 +24,7 @@
     (.flush writer)))
 
 (defn handler [msg-in]
-  (str (apply commands/execute (clojure.string/split msg-in #" "))))
+  (str (commands/execute msg-in)))
 
 (defn serve [port]
   (with-open [server-sock (ServerSocket. port)

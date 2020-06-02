@@ -10,6 +10,8 @@
   (println "args are: " args)
   (log/init)
   (service/start)
-  (server/start)
+
   (when (boolean (some #{"-p" "--prompt"} args))
-    (prompt/start)))
+    (prompt/start))
+  (when (boolean (some #{"-s" "--server"} args))
+    (server/start)))
