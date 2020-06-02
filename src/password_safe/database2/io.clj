@@ -1,7 +1,7 @@
-(ns password-safe.database2.io
+(ns birdsdb.database2.io
   (:require [clojure.data.json :as json]
             [clojure.java.io :as io]
-            [password-safe.logger.logger :as log]
+            [birdsdb.logger.logger :as log]
             [config.core :refer [env]]))
 
 (def db-path (-> env

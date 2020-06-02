@@ -1,9 +1,9 @@
-(ns password-safe.database.core-test
+(ns birdsdb.database.core-test
   (:require [clojure.test :refer :all]
             [clojure.test.check.properties :as prop]
             [clojure.test.check.generators :as gen]
             [clojure.test.check.clojure-test :refer [defspec]]
-            [password-safe.database.core :refer :all]))
+            [birdsdb.database.core :refer :all]))
 
 (def test-state [{:title "asos.com", :username "ulf", :password "abc", :id #uuid "bc1ccf0c-815b-4099-b02c-703acd3fc29f"}
                  {:title "youtube.com", :username "robert", :password "Password123", :id #uuid "220af2f7-99a5-42e6-9785-7af7d2fcb098"}])

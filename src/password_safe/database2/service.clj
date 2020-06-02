@@ -1,5 +1,5 @@
-(ns password-safe.database2.service
-  (:require [password-safe.database2.db :as db]))
+(ns birdsdb.database2.service
+  (:require [birdsdb.database2.db :as db]))
 
 (defn start []
   (db/init!))

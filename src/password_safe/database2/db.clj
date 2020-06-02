@@ -1,6 +1,6 @@
-(ns password-safe.database2.db
-  (:require [password-safe.logger.logger :as log]
-            [password-safe.database2.io :as io]))
+(ns birdsdb.database2.db
+  (:require [birdsdb.logger.logger :as log]
+            [birdsdb.database2.io :as io]))
 
 (def db (ref {}))
 

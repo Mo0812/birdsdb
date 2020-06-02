@@ -1,5 +1,5 @@
-(ns password-safe.database2.ql
-  (:require [password-safe.database2.db :as db]))
+(ns birdsdb.database2.ql
+  (:require [birdsdb.database2.db :as db]))
 
 (defn insert [item]
   (db/add! {:object item}))

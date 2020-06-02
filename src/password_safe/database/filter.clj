@@ -1,4 +1,4 @@
-(ns password-safe.database.filter)
+(ns birdsdb.database.filter)
 
 (defn item-includes?
   [key val]

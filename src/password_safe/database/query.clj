@@ -1,8 +1,8 @@
-(ns password-safe.database.query
+(ns birdsdb.database.query
   (:require
    [clojure.spec.alpha :as s]
-   [password-safe.database.filter :as filter]
-   [password-safe.database.spec :as spec]))
+   [birdsdb.database.filter :as filter]
+   [birdsdb.database.spec :as spec]))
 
 (defn filter-items [db & xfs]
   (sequence (apply comp xfs) db))

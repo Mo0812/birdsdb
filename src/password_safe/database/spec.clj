@@ -1,4 +1,4 @@
-(ns password-safe.database.spec
+(ns birdsdb.database.spec
   (:require [clojure.spec.alpha :as s]))
 
 (s/def ::title string?)

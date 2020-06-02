@@ -1,6 +1,6 @@
-(ns password-safe.database.service
-  (:require [password-safe.database.core :as db]
-            [password-safe.database.query :as query]))
+(ns birdsdb.database.service
+  (:require [birdsdb.database.core :as db]
+            [birdsdb.database.query :as query]))
 
 (defn init! []
   (println "init db...")

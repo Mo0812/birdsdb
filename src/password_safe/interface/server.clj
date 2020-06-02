@@ -1,5 +1,5 @@
-(ns password-safe.interface.server
-  (:require [password-safe.interface.commands :as commands]
+(ns birdsdb.interface.server
+  (:require [birdsdb.interface.commands :as commands]
             [clojure.java.io :as io]
             [config.core :refer [env]])
   (:import [java.net ServerSocket]))

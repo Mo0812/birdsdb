@@ -1,9 +1,9 @@
-(ns password-safe.core
+(ns birdsdb.core
   (:require
-   [password-safe.database2.service :as service]
-   [password-safe.interface.prompt :as prompt]
-   [password-safe.interface.server :as server]
-   [password-safe.logger.logger :as log])
+   [birdsdb.database2.service :as service]
+   [birdsdb.interface.prompt :as prompt]
+   [birdsdb.interface.server :as server]
+   [birdsdb.logger.logger :as log])
   (:gen-class))
 
 (defn -main [& args]

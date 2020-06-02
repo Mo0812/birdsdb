@@ -1,6 +1,6 @@
-(ns password-safe.interface.commands
-  (:require [password-safe.database2.ql :as ql]
-            [password-safe.generator.core :as generator]))
+(ns birdsdb.interface.commands
+  (:require [birdsdb.database2.ql :as ql]
+            [birdsdb.generator.core :as generator]))
 
 (defmulti interface-commands (fn [cmd _]
                                cmd))

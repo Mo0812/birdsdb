@@ -1,6 +1,6 @@
-# password-safe
+# birdsdb
 
-`password-safe` is a terminal based password management software written in Clojure. It is build upon a custom object database. That database is not only the fundation but also the main focus of creating this project.
+`birdsdb` is a terminal based password management software written in Clojure. It is build upon a custom object database. That database is not only the fundation but also the main focus of creating this project.
 
 The object based information are basically stored in a JSON representation on the disk, seperated in fixed-sized chunks. To not always read the entire file-based information ...!
 
@@ -12,7 +12,7 @@ Download from http://example.com/FIXME.
 
 FIXME: explanation
 
-    $ java -jar password-safe-0.1.0-standalone.jar [args]
+    $ java -jar birdsdb-0.1.0-standalone.jar [args]
 
 ## Options
 

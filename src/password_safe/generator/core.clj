@@ -1,4 +1,4 @@
-(ns password-safe.generator.core)
+(ns birdsdb.generator.core)
 
 (defn generate-password [len]
   (let [chars-between #(map char (range (int %1) (inc (int %2))))

@@ -1,4 +1,4 @@
-(ns password-safe.database.core
+(ns birdsdb.database.core
   (:require [clojure.data.json :as json]))
 
 (def db-path "db.json")

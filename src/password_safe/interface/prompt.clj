@@ -1,5 +1,5 @@
-(ns password-safe.interface.prompt
-  (:require [password-safe.interface.commands :as commands]))
+(ns birdsdb.interface.prompt
+  (:require [birdsdb.interface.commands :as commands]))
 
 (defn fetch-cmd []
   (loop [in (read-line)]

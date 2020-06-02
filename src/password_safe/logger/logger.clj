@@ -1,4 +1,4 @@
-(ns password-safe.logger.logger
+(ns birdsdb.logger.logger
   (:require [clojure.java.io :as io]
             [taoensso.timbre :as timbre]
             [taoensso.timbre.appenders.core :as appenders]
