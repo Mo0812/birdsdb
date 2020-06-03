@@ -16,7 +16,7 @@
 
 (def collector (atom #{}))
 
-(declare write-db-data)
+(declare write-db-data read-file)
 
 (defn process-chunk [path chunk]
   (log/log :info "processing chunk:" (pr-str chunk))
@@ -51,12 +51,15 @@
 (defn read-db [path]
   (flatten (for [f (file-seq (io/file path))
                  :when (not (.isDirectory f))]
-             (map
-              (fn [item]
-                (let [id (:id item)]
-                  (assoc item :id (java.util.UUID/fromString id))))
-              (json/read-str (slurp f)
-                             :key-fn keyword)))))
+             (read-file f))))
+
+(defn read-file [file]
+  (map
+   (fn [item]
+     (let [id (:id item)]
+       (assoc item :id (java.util.UUID/fromString id))))
+   (json/read-str (slurp file)
+                  :key-fn keyword)))
 
 (defn write-db-data
   ([path coll]

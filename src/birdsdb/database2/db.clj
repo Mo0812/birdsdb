@@ -8,7 +8,9 @@
   (let [id (if (nil? (:id entry))
              (java.util.UUID/randomUUID)
              (:id entry))
-        ts (System/currentTimeMillis)
+        ts (if (nil? (:ts entry))
+             (System/currentTimeMillis)
+             (:ts entry))
         deleted (if (nil? (:deleted entry))
                   false
                   (:deleted entry))
