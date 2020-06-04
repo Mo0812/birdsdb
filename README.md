@@ -12,33 +12,39 @@ A complete list of the features can is listed below.
 
 ## Installation
 
-Download from http://example.com/FIXME.
+For now, `birdsdb` is in a early development stage, so you can only clone and integrate it in your project. While the project is making more progress, this section gets updated.
 
 ## Features 
 
-...
+`birdsdb` is a simple database with the following features:
+- **storing objects:** The database can store and maintain any kind of hashmap in clojure, but the goal is to either use edn or json as an input and output format through the interface and clients later on.
+- **revisions & immutable data:** The database do not mutate any kind of stored object. This has clear advantages: Every change of a data object will result in a additional copy of it in stored in the database. Therefore any change of a data object can be revisioned at any state which once was maintained in the database. Also this technique allows to have a simpler approach of persistent data handling at the file level and allows the given approach of multiple instances (scale) with synced data foundations.
+- **in-memory:** While the *single source of truth* of the stored information in the database consists of the maintained files in the file system, `birdsdb` handles queries during runtime with an additional in-memory part. This part is synced with the changes, both from data mutation in the own instance and the detected mutations of other instances when running in synced mode. Therefore querying not depends on the access rate of the file system, but is fastly delivered through holding also a copy of needed in formation in memory. Nevertheless it still can fallback to the stored information in the files at any time, due this part should only boost performance.
+- **several connection methods:** Once an instance of the database is running, it can easily accessed over TCP. Also different client libraries are planned. It also can be accessed by starting it in a prompted mode.
+- **syncing & scalability:** `birdsdb` works as a standalone database, started as a process and accessed over tcp or the given prompt (for now). Nevertheless also multiple instances of `birdsdb` relying on the same data foundation is possible. Therefore those instances can be run in *synced mode* in which each database instance watches for changes in the filesystem and reacts with adding those to its in-memory database-state copy. Because of the immutable approach of stored objects, falsely repeatedly detected changes of the same data objects, or even older mutations get processed correctly, so that the state of each of the running instances is not in danger at any time.
+- **self-managed approach:** While during a mutation process of a data object, `birdsdb` directly write those changes to the file system, to prevent inconsistencies in the data foundation, those single mutations encapsulated in a single file will slow down the startup time of a database instance over time and also produce slidely more io operations as needed. Therefore the database tries to manage it self at several parts of the application. One of those self-managed processes is to summarize the changes written as single encapsulated mutations. By keeping track of the mutations and reacting at a predefined amount of their file representation, the self-managed process summarize those mutation in a file consisting that fixed amount of data objects in a so called *chunk*. As said before chunk enable a more pesistent and less resource consuming inital startup of an database instance as well as in the *sync mode*.
+
+![docs/blueprint_dp.jpg](docs/blueprint_dp.jpg)
 
 ## Usage
 
-FIXME: explanation
-
-    $ java -jar birdsdb-0.1.0-standalone.jar [args]
+... this section will be completed soon ...
 
 ## Options
 
-FIXME: listing of options this app accepts.
+... this section will be completed soon ...
 
 ## Examples
 
-...
+... this section will be completed soon ...
 
 ## Roadmap
 
-...
+... this section will be completed soon ...
 
 ## Bugs
 
-...
+... this section will be completed soon ...
 
 ## License
 
