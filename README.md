@@ -1,12 +1,22 @@
 # birdsdb
 
-`birdsdb` is a terminal based password management software written in Clojure. It is build upon a custom object database. That database is not only the fundation but also the main focus of creating this project.
+`birdsdb` is a database written in Clojure, which allows you to store and query objects. Instead of maintaining a single mutuable instance of the provided data, changes get stored as additional records seperated by timestamps so that every state of an object is reproducable and redoable.
 
-The object based information are basically stored in a JSON representation on the disk, seperated in fixed-sized chunks. To not always read the entire file-based information ...!
+While information gets stored persistently in the file system, a running instance of `birdsdb` is working with a selected copy of the database state in memory to improve performance.
+
+Besides that `birdsdb` is build to be scalable. Multiple instances of a database can be run simultaneously on the same data basis while all of those instances keep their state in sync.
+
+`birdsdb` can be accessed by a TCP connection, prompted directly in console, can be integrated in your own Clojure project, or at a later stage also be accessed by several clients.
+
+A complete list of the features can is listed below.
 
 ## Installation
 
 Download from http://example.com/FIXME.
+
+## Features 
+
+...
 
 ## Usage
 
