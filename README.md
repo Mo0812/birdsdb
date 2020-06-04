@@ -32,7 +32,11 @@ FIXME: listing of options this app accepts.
 
 ...
 
-### Bugs
+## Roadmap
+
+...
+
+## Bugs
 
 ...
 
