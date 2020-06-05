@@ -1,5 +1,7 @@
 # birdsdb
 
+![doc/birdsdb_logo.png](doc/birdsdb_logo.png)
+
 `birdsdb` is a database written in Clojure, which allows you to store and query objects. Instead of maintaining a single mutuable instance of the provided data, changes get stored as additional records seperated by timestamps so that every state of an object is reproducable and redoable.
 
 While information gets stored persistently in the file system, a running instance of `birdsdb` is working with a selected copy of the database state in memory to improve performance.
