@@ -1,17 +1,31 @@
 (ns birdsdb.interface.commands
   (:require [birdsdb.db.ql :as ql]
-            [birdsdb.generator.core :as generator]))
+            [clojure.data.json :as json]))
 
 (defmulti interface-commands (fn [cmd _]
                                cmd))
 
 (defmethod interface-commands "select" [_ args]
-  (if (nil? args)
-    (ql/select)
-    (ql/select args)))
+  (let [response (if (nil? args)
+                   (ql/select)
+                   (ql/select args))]
+    (json/write-str [response])))
 
-(defmethod interface-commands "generate" [cmd [len & pieces]]
-  (generator/generate-password len))
+(defmethod interface-commands "insert" [_ objects]
+  (println objects)
+  (for [object objects]
+    (ql/insert object)))
+
+(defmethod interface-commands "update" [_ [id new-object]]
+  (let [id (java.util.UUID/fromString id)
+        new-object (json/read-str new-object
+                                  :key-fn keyword)]
+    (ql/update id new-object)))
+
+(defmethod interface-commands "delete" [_ ids]
+  (for [id ids
+        :let [uuid (java.util.UUID/fromString id)]]
+    (ql/delete uuid)))
 
 (defmethod interface-commands :default [cmd args]
   (str "The cmd '" cmd "' is not supported or misspelled, please try again or use 'help' for showing the available commands"))
@@ -22,6 +36,6 @@
 
 (defn execute [cmd]
   (cond
-    (string? cmd) (apply execute-command (clojure.string/split cmd #" "))
+    (string? cmd) (apply execute-command (first (clojure.string/split cmd #" ")) (json/read-str (clojure.string/join " " (rest (clojure.string/split cmd #" "))) :key-fn keyword))
     (vector? cmd) (apply execute-command cmd)))
 
