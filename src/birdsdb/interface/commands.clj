@@ -5,8 +5,10 @@
 (defmulti interface-commands (fn [cmd _]
                                cmd))
 
-(defmethod interface-commands "search" [cmd args]
-  (ql/select))
+(defmethod interface-commands "select" [_ args]
+  (if (nil? args)
+    (ql/select)
+    (ql/select args)))
 
 (defmethod interface-commands "generate" [cmd [len & pieces]]
   (generator/generate-password len))
