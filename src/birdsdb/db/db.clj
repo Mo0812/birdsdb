@@ -1,6 +1,6 @@
-(ns birdsdb.database2.db
+(ns birdsdb.db.db
   (:require [birdsdb.logger.logger :as log]
-            [birdsdb.database2.io :as io]))
+            [birdsdb.db.io :as io]))
 
 (def db (ref {}))
 

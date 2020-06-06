@@ -1,5 +1,5 @@
 (ns birdsdb.interface.commands
-  (:require [birdsdb.database2.ql :as ql]
+  (:require [birdsdb.db.ql :as ql]
             [birdsdb.generator.core :as generator]))
 
 (defmulti interface-commands (fn [cmd _]

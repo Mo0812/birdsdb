@@ -1,6 +1,6 @@
 (ns birdsdb.core
   (:require
-   [birdsdb.database2.service :as service]
+   [birdsdb.db.service :as service]
    [birdsdb.interface.prompt :as prompt]
    [birdsdb.interface.server :as server]
    [birdsdb.logger.logger :as log])

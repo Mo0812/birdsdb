@@ -1,4 +1,4 @@
-(ns birdsdb.database2.io
+(ns birdsdb.db.io
   (:require [clojure.data.json :as json]
             [clojure.java.io :as io]
             [birdsdb.logger.logger :as log]
