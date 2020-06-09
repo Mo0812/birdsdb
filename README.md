@@ -1,3 +1,5 @@
+![](https://github.com/Mo0812/birdsdb/workflows/test.yml/badge.svg)
+
 # birdsdb
 
 ![doc/birdsdb_logo.png](doc/birdsdb_logo.png)
