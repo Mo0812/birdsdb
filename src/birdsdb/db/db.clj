@@ -25,7 +25,7 @@
      (dosync
       (ref-set db {})
       (alter db into (for [[id db-entry] current-state]
-                       [id (:object db-entry)]))))))
+                       [id db-entry]))))))
 
 (defn add!
   ([entry]
@@ -40,6 +40,6 @@
                               :db-path) [db-entry]))
                (dosync (if deleted
                          (alter db dissoc db id)
-                         (alter db assoc id (:object db-entry))))
+                         (alter db assoc id db-entry)))
                (catch Exception e
                  (log/log :error e)))))))

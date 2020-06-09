@@ -11,6 +11,9 @@
 (defn delete [id]
   (db/add! {:id id :deleted true}))
 
+(defn parse-db-entry [[id db-entry]]
+  [id (:object db-entry)])
+
 (defn select
   ([& xfs]
-   (into {} (sequence (apply comp xfs) @db/db))))
+   (into {} (sequence (apply comp xfs) (into {} (map parse-db-entry @db/db))))))
