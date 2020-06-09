@@ -1,4 +1,4 @@
-![](https://github.com/Mo0812/birdsdb/workflows/test.yml/badge.svg)
+![](https://github.com/Mo0812/birdsdb/workflows/Test/badge.svg)
 
 # birdsdb
 
