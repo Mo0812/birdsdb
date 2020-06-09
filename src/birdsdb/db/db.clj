@@ -17,20 +17,29 @@
         object (:object entry)]
     [id (assoc {} :id id :ts ts :deleted deleted :object object)]))
 
-(defn init! []
-  (let [current-state (io/receive-current-state io/db-path)]
-    (dosync
-     (alter db into (for [[id db-entry] current-state]
-                      [id (:object db-entry)])))))
+(defn init!
+  ([]
+   (init! io/db-path))
+  ([db-path]
+   (let [current-state (io/receive-current-state db-path)]
+     (dosync
+      (ref-set db {})
+      (alter db into (for [[id db-entry] current-state]
+                       [id (:object db-entry)]))))))
 
-(defn add! [entry]
-  (let [[id db-entry] (create-db-entry entry)
-        deleted (:deleted db-entry)]
-    (.start (Thread. (fn []
-                       (try
-                         (io/save io/db-path [db-entry])
-                         (dosync (if deleted
-                                   (alter db dissoc db id)
-                                   (alter db assoc id (:object db-entry))))
-                         (catch Exception e
-                           (log/log :error e))))))))
+(defn add!
+  ([entry]
+   (add! entry {:io true :db-path io/db-path}))
+  ([entry options]
+   (let [[id db-entry] (create-db-entry entry)
+         deleted (:deleted db-entry)]
+     (future (try
+               (when (-> options
+                         :io)
+                 (io/save (-> options
+                              :db-path) [db-entry]))
+               (dosync (if deleted
+                         (alter db dissoc db id)
+                         (alter db assoc id (:object db-entry))))
+               (catch Exception e
+                 (log/log :error e)))))))

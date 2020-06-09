@@ -15,4 +15,4 @@
                  :init (-main)}
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
-             :dev {:resource-paths ["env/dev/config"]}e})
+             :dev {:resource-paths ["env/dev/config"]}})
