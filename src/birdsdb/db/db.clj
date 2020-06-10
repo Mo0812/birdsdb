@@ -28,10 +28,6 @@
       (alter db into (for [[id db-entry] current-state]
                        [id db-entry]))))))
 
-(s/fdef init!
-  :args (s/cat)
-  :ret :birdsdb.db.db-test/db)
-
 (defn add!
   ([entry]
    (add! entry {:io true :db-path io/db-path}))
@@ -48,7 +44,3 @@
                          (alter db assoc id db-entry)))
                (catch Exception e
                  (log/log :error e)))))))
-
-(s/fdef add!
-  :args (s/cat :entry ::entry)
-  :ret future?)

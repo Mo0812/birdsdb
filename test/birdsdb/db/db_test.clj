@@ -48,12 +48,20 @@
   5
   create-db-entry-test-check)
 
+(s/fdef init!
+  :args (s/cat)
+  :ret ::db)
+
 (deftest init!-test
   (is (init! db-test-path) test-state)
   (is (s/valid? ::db @db)))
 
 (deftest init!-test-spec
   (is (stest/check `init!)))
+
+(s/fdef add!
+  :args (s/cat :entry ::entry)
+  :ret future?)
 
 (deftest add!-test
   (let [fut (add! {:object {:test "test"}} {:io false :db-path db-test-path})]
