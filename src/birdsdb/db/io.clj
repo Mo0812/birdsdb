@@ -18,10 +18,13 @@
 
 (declare write-db-data read-file)
 
+(defn compose-filename [id]
+  (str id ".edn"))
+
 (defn process-chunk [path chunk]
   (log/log :info "processing chunk:" (pr-str chunk))
   (let [chunk-contents (for [file-id chunk]
-                         (flatten (json/read-str (slurp (io/file path (str file-id ".json"))) :key-fn keyword)))]
+                         (flatten (read-string (slurp (io/file path (compose-filename file-id))))))]
     (log/log :info "chunk contents:" (pr-str chunk-contents))
     (try
       (log/log :info "try to write" (pr-str chunk) "in chunk")
@@ -54,20 +57,14 @@
              (read-file f))))
 
 (defn read-file [file]
-  (map
-   (fn [item]
-     (let [id (:id item)]
-       (assoc item :id (java.util.UUID/fromString id))))
-   (json/read-str (slurp file)
-                  :key-fn keyword)))
+  (read-string (slurp file)))
 
 (defn write-db-data
   ([path coll]
    (write-db-data path coll (java.util.UUID/randomUUID)))
   ([path coll id]
-   (spit (io/file path (str id ".json"))
-         (json/write-str
-          (map #(update % :id str) coll)))))
+   (spit (io/file path (compose-filename id))
+         (pr-str coll))))
 
 (defn save [path coll]
   (let [file-id (java.util.UUID/randomUUID)]

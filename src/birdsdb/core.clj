@@ -6,8 +6,8 @@
    [birdsdb.interface.server :as server]
    [birdsdb.logger.logger :as log])
   (:gen-class))
-  
-(def cli-options 
+
+(def cli-options
   [["-s" "--server" "Start server"
     :default false]
    ["-p" "--prompt" "Start prompt"
@@ -21,7 +21,7 @@
   (println "args are: " args)
   (log/init)
   (service/start)
-  
+
   (let [options (parse-opts args cli-options)]
     (println "parsed cli options:")
     (println options)
@@ -32,6 +32,4 @@
     (when (-> options
               :options
               :prompt)
-      (prompt/start))
-  )
-)
+      (prompt/start))))
