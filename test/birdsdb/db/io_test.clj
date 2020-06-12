@@ -5,7 +5,8 @@
             [clojure.spec.alpha :as s]
             [clojure.spec.gen.alpha :as gen]
             [clojure.spec.test.alpha :as stest]
-            [birdsdb.db.io :refer :all]))
+            [birdsdb.db.io :refer :all])
+  (:use clojure.data))
 
 (def db-test-path "db_test")
 
@@ -92,7 +93,7 @@
 
 (deftest read-db-test
   (let [file-dump (read-db db-test-path)]
-    (is (= file-dump full-file-dump))
+    (is (= [nil nil full-file-dump] (clojure.data/diff file-dump full-file-dump)))
     (is (s/valid? ::file-dump file-dump))))
 
 (deftest write-db-data-test
@@ -106,10 +107,10 @@
 
 (deftest receive-all-test
   (let [db (receive-all db-test-path)]
-    (is (= db full-db-state))
+    (is (= [nil nil full-db-state] (clojure.data/diff db full-db-state)))
     (is (s/valid? ::db-with-revisions db))))
 
 (deftest receive-current-state-test
   (let [db (receive-current-state db-test-path)]
-    (is (= db current-db-state))
+    (is (= [nil nil current-db-state] (clojure.data/diff db current-db-state)))
     (is (s/valid? ::db-current db))))
