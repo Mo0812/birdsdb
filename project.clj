@@ -9,7 +9,8 @@
                  [com.taoensso/timbre "4.10.0"]
                  [yogthos/config "1.1.7"]
                  [juxt/dirwatch "0.2.5"]
-                 [org.clojure/tools.cli "1.0.194"]]
+                 [org.clojure/tools.cli "1.0.194"]
+                 [criterium "0.4.5"]]
   :main ^:skip-aot birdsdb.core
   :repl-options {:init-ns birdsdb.core
                  :init (-main)}
