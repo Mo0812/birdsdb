@@ -18,6 +18,8 @@ A complete list of the features can is listed below.
 
 For now, `birdsdb` is in a early development stage, so you can only clone and integrate it in your project. While the project is making more progress, this section gets updated.
 
+> More information coming soon...
+
 ## Features 
 
 `birdsdb` is a simple database with the following features:
@@ -44,11 +46,23 @@ For now, `birdsdb` is in a early development stage, so you can only clone and in
 
 ## Roadmap
 
-... this section will be completed soon ...
+- [ ] edn-based chunk watcher
+- [ ] fully integrate sync-mode over file based changes
+- [ ] sync-mode based on inter-process communication
+- [ ] finishing redundancy feature
+- [ ] possibility to scale up instances by intelligent chunking of contents across multiple instances
+- [ ] create query syntax for accessing data from prompt and server interface
+- [ ] performance testing 
+- [ ] developing testing further
+- [ ] encryption based on end-to-end communication and implementing decent user right management thereby
 
 ## Bugs
 
-... this section will be completed soon ...
+If you have any ideas, suggestions for improvements or misbehavior, plan to contribute or just find any kind of bug in `birdsdb` please file an issue and discuss topic-base timely.
+
+All in all I am lucky for every reaction regarding this database project.
+
+## Contribution
 
 ## License
 
