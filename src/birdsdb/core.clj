@@ -5,6 +5,7 @@
    [birdsdb.interface.prompt :as prompt]
    [birdsdb.interface.server :as server]
    [birdsdb.logger.logger :as log])
+  (:use [clansi])
   (:gen-class))
 
 (def cli-options
@@ -16,15 +17,19 @@
     :default 50937
     :parse-fn #(Integer/parseInt %)
     :validate [#(< 0 % 0x10000) "Must be a number between 0 and 65536"]]])
+    
+ (defn welcome-message []
+  (let [logo (slurp "assets/bcib50.txt")
+        letters (slurp "assets/bdblb50.txt")]
+    (println (style logo :yellow))
+    (println letters)))
 
 (defn -main [& args]
-  (println "args are: " args)
+  (welcome-message)
   (log/init)
   (service/start)
 
   (let [options (parse-opts args cli-options)]
-    (println "parsed cli options:")
-    (println options)
     (when (-> options
               :options
               :server)
