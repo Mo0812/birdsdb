@@ -14,12 +14,12 @@
                         :server
                         :port)))))
 
-(defn receive
+(defn receive-msg
   "Read a line of textual data from the given socket"
   [socket]
   (.readLine (io/reader socket)))
 
-(defn send
+(defn send-msg
   "Send the given string message out over the given socket"
   [socket msg]
   (let [writer (io/writer socket)]
@@ -35,8 +35,8 @@
     (loop []
       (if (Thread/interrupted)
         nil
-        (let [msg-in (receive sock)]
-          (.start (Thread. (fn [] (send sock (handler msg-in)))))
+        (let [msg-in (receive-msg sock)]
+          (.start (Thread. (fn [] (send-msg sock (handler msg-in)))))
           (recur))))))
 
 (defn start []
