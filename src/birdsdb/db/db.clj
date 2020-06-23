@@ -1,7 +1,8 @@
 (ns birdsdb.db.db
   (:require [clojure.spec.alpha :as s]
             [birdsdb.logger.logger :as log]
-            [birdsdb.db.io :as io]))
+            [birdsdb.db.io :as io]
+            [birdsdb.db.chunker :as chunker]))
 
 (def db (ref {}))
 
@@ -26,7 +27,8 @@
      (dosync
       (ref-set db {})
       (alter db into (for [[id db-entry] current-state]
-                       [id db-entry]))))))
+                       [id db-entry]))))
+    (chunker/watch-collector db-path)))
 
 (defn add!
   ([entry]

@@ -1,6 +1,5 @@
 (ns birdsdb.db.io
-  (:require [clojure.data.json :as json]
-            [clojure.java.io :as io]
+  (:require [clojure.java.io :as io]
             [birdsdb.logger.logger :as log]
             [config.core :refer [env]]))
 
@@ -8,56 +7,19 @@
                  :db
                  :io
                  :db-path))
-
-(def chunk-size (-> env
-                    :db
-                    :io
-                    :chunk-size))
-
+                 
 (def collector (atom #{}))
-
-(declare write-db-data read-file)
 
 (defn compose-filename [id]
   (str id ".edn"))
-
-(defn process-chunk [path chunk]
-  (log/log :info "processing chunk:" (pr-str chunk))
-  (let [chunk-contents (for [file-id chunk]
-                         (flatten (read-string (slurp (io/file path (compose-filename file-id))))))]
-    (log/log :info "chunk contents:" (pr-str chunk-contents))
-    (try
-      (log/log :info "try to write" (pr-str chunk) "in chunk")
-      (write-db-data path (flatten chunk-contents) (str "chunk-" (java.util.UUID/randomUUID)))
-      (doseq [file-id chunk]
-        (log/log :info "deleting:" file-id)
-        (io/delete-file (io/file path (str file-id ".json"))))
-      (catch java.io.FileNotFoundException e
-        (swap! collector #(apply conj % chunk))
-        (log/log :error e))
-      (catch Exception e
-        (log/log :error "Can not write" (pr-str chunk) "in chunk")
-        (log/log :error e)))))
-
-(defn watch-collector [path]
-  (add-watch collector :watch-collector
-             (fn [key atom old-state new-state]
-               (when (> (count new-state) chunk-size)
-                 (let [new-chunk (take chunk-size new-state)
-                       rest (drop chunk-size new-state)]
-                   (log/log :info "new-chunk:" (pr-str new-chunk))
-                   (log/log :info "rest of chunk:" (pr-str rest))
-                   (reset! collector rest)
-                   (.start (Thread. (fn []
-                                      (process-chunk path new-chunk)))))))))
+  
+(defn read-file [file]
+  (read-string (slurp file)))
 
 (defn read-db [path]
   (flatten (for [f (file-seq (io/file path))
                  :when (not (.isDirectory f))]
-             (read-file f))))
-
-(defn read-file [file]
-  (read-string (slurp file)))
+             (read-file f))))      
 
 (defn write-db-data
   ([path coll]
