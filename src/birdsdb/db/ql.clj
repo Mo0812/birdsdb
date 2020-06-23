@@ -2,8 +2,11 @@
   (:require [birdsdb.db.db :as db]
             [birdsdb.db.filter :as filter]))
 
-(defn insert-db [item]
-  (db/add! {:object item}))
+(defn insert-db
+  ([item]
+   (db/add! {:object item}))
+  ([item options]
+   (db/add! {:object item} options)))
 
 (defn update-db [id item]
   (db/add! {:id id :object item}))

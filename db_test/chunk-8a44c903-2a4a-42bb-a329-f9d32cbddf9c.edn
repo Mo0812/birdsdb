@@ -1,1 +1,0 @@
-[{:id #uuid "fbeeb1a9-cecd-4c77-8d7b-5c1c6eba0608", :ts 1590247125384, :deleted false, :object {:test 3}} {:id #uuid "e70c1425-a25d-48ff-b889-f1bc91ead4d2", :ts 1590244489576, :object {:title "facebook.com", :username "john", :password "abcdefgh123"}}]

@@ -16,5 +16,6 @@
   :repl-options {:init-ns birdsdb.core
                  :init (-main)}
   :target-path "target/%s"
+  :jvm-options ["Xms128m" "-Xmx2g"]
   :profiles {:uberjar {:aot :all}
              :dev {:resource-paths ["env/dev/config"]}})

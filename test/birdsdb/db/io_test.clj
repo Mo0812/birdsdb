@@ -8,9 +8,9 @@
             [birdsdb.db.io :refer :all])
   (:use clojure.data))
 
-(def db-test-path "db_test")
+(def db-test-path "db/test")
 
-(def test-file-path "db_test/chunk-2de31d4d-afba-48dd-8d7e-c50b37406e54.edn")
+(def test-file-path "db/test/chunk-2de31d4d-afba-48dd-8d7e-c50b37406e54.edn")
 
 (def test-file-contents '({:id #uuid "bc1ccf0c-815b-4099-b02c-703acd3fc29f", :ts 1590184764635, :object {:title "asos.com", :username "ulf", :password "abc"}} {:id #uuid "220af2f7-99a5-42e6-9785-7af7d2fcb098", :ts 1590184764412, :object {:title "youtube.com", :username "robert", :password "Password123"}}))
 

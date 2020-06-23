@@ -4,15 +4,10 @@
             [clojure.java.io :as io]
             [config.core :refer [env]]))
 
-(def db-path (-> env
-                 :db
-                 :io
-                 :db-path))
-                 
 (def chunking-enabled? (-> env
-                          :db
-                          :chunker
-                          :enabled?))
+                           :db
+                           :chunker
+                           :enabled?))
 
 (def chunk-size (-> env
                     :db
@@ -38,14 +33,14 @@
         (log/log :error e)))))
 
 (defn watch-collector [path]
-  (when chunking-enabled? 
+  (when chunking-enabled?
     (add-watch bdio/collector :watch-collector
-             (fn [key atom old-state new-state]
-               (when (> (count new-state) chunk-size)
-                 (let [new-chunk (take chunk-size new-state)
-                       rest (drop chunk-size new-state)]
-                   (log/log :info "new-chunk:" (pr-str new-chunk))
-                   (log/log :info "rest of chunk:" (pr-str rest))
-                   (reset! bdio/collector rest)
-                   (.start (Thread. (fn []
-                   (process-chunk path new-chunk))))))))))
+               (fn [key atom old-state new-state]
+                 (when (> (count new-state) chunk-size)
+                   (let [new-chunk (take chunk-size new-state)
+                         rest (drop chunk-size new-state)]
+                     (log/log :info "new-chunk:" (pr-str new-chunk))
+                     (log/log :info "rest of chunk:" (pr-str rest))
+                     (reset! bdio/collector rest)
+                     (.start (Thread. (fn []
+                                        (process-chunk path new-chunk))))))))))

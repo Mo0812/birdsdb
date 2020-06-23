@@ -7,7 +7,7 @@
             [clojure.spec.test.alpha :as stest]
             [birdsdb.db.db :refer :all]))
 
-(def db-test-path "db_test")
+(def db-test-path "db/test")
 
 (def test-state {#uuid "fbeeb1a9-cecd-4c77-8d7b-5c1c6eba0608"
                  {:id #uuid "fbeeb1a9-cecd-4c77-8d7b-5c1c6eba0608", :ts 1590247125384, :deleted false, :object {:test 3}}
