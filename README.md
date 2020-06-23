@@ -34,6 +34,14 @@ For now, `birdsdb` is in a early development stage, so you can only clone and in
 
 ## Usage
 
+When `birdsdb` is compiled and started as a jar the defined base config in `project.clj` is used. Because the config is managed by [config](https://github.com/yogthos/config) the base config file can be overwritten with an external one at any time by providing it as an environment variable:
+
+```
+java -Dconfig="path/to/my/config.edn" -jar target/birdsdb.jar
+```
+
+In development the base config path can be changed in the `project.clj` declaration.
+
 ... this section will be completed soon ...
 
 ## Options
@@ -46,7 +54,7 @@ For now, `birdsdb` is in a early development stage, so you can only clone and in
 
 ## Roadmap
 
-- [ ] edn-based chunk watcher
+- [x] edn-based chunk watcher
 - [ ] fully integrate sync-mode over file based changes
 - [ ] sync-mode based on inter-process communication
 - [ ] finishing redundancy feature
