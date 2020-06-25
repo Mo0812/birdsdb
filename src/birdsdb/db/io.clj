@@ -7,19 +7,23 @@
                  :db
                  :io
                  :db-path))
-                 
-(def collector (atom #{}))
+
+(def protocol (atom #{}))
 
 (defn compose-filename [id]
   (str id ".edn"))
-  
+
+(defn decompose-filename [file]
+  (clojure.string/replace (.getName file) #"[.][^.]+$" ""))
+
 (defn read-file [file]
+  (swap! protocol conj (decompose-filename file))
   (read-string (slurp file)))
 
 (defn read-db [path]
   (flatten (for [f (file-seq (io/file path))
                  :when (not (.isDirectory f))]
-             (read-file f))))      
+             (read-file f))))
 
 (defn write-db-data
   ([path coll]
@@ -32,7 +36,7 @@
   (let [file-id (java.util.UUID/randomUUID)]
     (try
       (write-db-data path coll file-id)
-      (swap! collector conj file-id)
+      (swap! protocol conj (str file-id))
       (catch Exception e
         (log/log :error e)
         (throw e)))))
