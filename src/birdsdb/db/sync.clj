@@ -1,7 +1,7 @@
-(ns birdsdb.database2.sync
+(ns birdsdb.db.sync
   (:require [juxt.dirwatch :refer [watch-dir close-watcher]]
-            [birdsdb.database2.io :as io]
-            [birdsdb.database2.db :as db]))
+            [birdsdb.db.io :as io]
+            [birdsdb.db.db :as db]))
 
 (def sync-state (atom nil))
 
