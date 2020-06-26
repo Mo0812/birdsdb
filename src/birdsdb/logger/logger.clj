@@ -16,12 +16,17 @@
 
   ; The default setup is simple console logging.  We with to turn off console logging and
   ; turn on file logging to our chosen filename.
-  (timbre/merge-config! {:appenders {:println {:enabled? (-> env
-                                                             :logging
-                                                             :print-logs?)}}})
-  (timbre/merge-config! {:appenders {:spit (appenders/spit-appender {:fname (-> env
-                                                                                :logging
-                                                                                :output-path)})}})
+  (timbre/merge-config! {:appenders {:println
+                                     {:enabled? (-> env
+                                                    :logging
+                                                    :print-logs?)}}})
+  (when (-> env :logging :write-logs)
+    (timbre/merge-config! {:appenders
+                           {:spit (appenders/spit-appender
+                                   {:fname (-> env
+                                               :logging
+                                               :output-path)})}}))
+
 
   ; Set the lowest-level to output as :debug
   (timbre/set-level! (-> env

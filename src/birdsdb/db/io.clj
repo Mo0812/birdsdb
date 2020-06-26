@@ -17,6 +17,7 @@
   (clojure.string/replace (.getName file) #"[.][^.]+$" ""))
 
 (defn read-file [file]
+  (log/log :info "reading:" file)
   (swap! protocol conj (decompose-filename file))
   (read-string (slurp file)))
 
@@ -29,6 +30,7 @@
   ([path coll]
    (write-db-data path coll (java.util.UUID/randomUUID)))
   ([path coll id]
+   (log/log :info "writing:" path coll id)
    (spit (io/file path (compose-filename id))
          (pr-str coll))))
 
