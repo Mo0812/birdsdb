@@ -11,7 +11,9 @@
 
 (defn sync-file-state [file-obj]
   (log/log :debug "file change detected" file-obj)
-  (when (and (not (contains? @io/protocol (io/decompose-filename (:file file-obj)))) (= (:action file-obj) :create))
+  (when (and
+         (not (contains? @io/protocol (io/decompose-filename (:file file-obj))))
+         (= (:action file-obj) :create))
     (let [entries (io/read-file (:file file-obj))]
       (doseq [entry entries]
         (log/log :info "processing entry detected by sync watcher" entry)

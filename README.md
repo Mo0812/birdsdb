@@ -12,7 +12,7 @@ Besides that `birdsdb` is build to be scalable. Multiple instances of a database
 
 `birdsdb` can be accessed by a TCP connection, prompted directly in console, can be integrated in your own Clojure project, or at a later stage also be accessed by several clients.
 
-A complete list of the features can is listed below.
+A complete list of the features is listed below.
 
 ## Installation
 
@@ -23,12 +23,12 @@ For now, `birdsdb` is in a early development stage, so you can only clone and in
 ## Features 
 
 `birdsdb` is a simple database with the following features:
-- **storing objects:** The database can store and maintain any kind of hashmap in clojure, but the goal is to either use edn or json as an input and output format through the interface and clients later on.
+- **storing objects:** The database can store and maintain any kind of hashmap in clojure. Internally those data objects are stored persistently as `edn` files in the file system.
 - **revisions & immutable data:** The database do not mutate any kind of stored object. This has clear advantages: Every change of a data object will result in a additional copy of it in stored in the database. Therefore any change of a data object can be revisioned at any state which once was maintained in the database. Also this technique allows to have a simpler approach of persistent data handling at the file level and allows the given approach of multiple instances (scale) with synced data foundations.
 - **in-memory:** While the *single source of truth* of the stored information in the database consists of the maintained files in the file system, `birdsdb` handles queries during runtime with an additional in-memory part. This part is synced with the changes, both from data mutation in the own instance and the detected mutations of other instances when running in synced mode. Therefore querying not depends on the access rate of the file system, but is fastly delivered through holding also a copy of needed in formation in memory. Nevertheless it still can fallback to the stored information in the files at any time, due this part should only boost performance.
-- **several connection methods:** Once an instance of the database is running, it can easily accessed over TCP. Also different client libraries are planned. It also can be accessed by starting it in a prompted mode.
+- **several connection methods:** Once an instance of the database is running, it can easily accessed over TCP or a implemented CLI interface. With that communication methods given, client libraries based on those can be easily implemented on purpose when needed. When `birdsdb` is used as a database inside a clojure project, the whole database system can of course be accessed directly inside the project through clojure code without connecting to other available communication methods.
 - **syncing & scalability:** `birdsdb` works as a standalone database, started as a process and accessed over tcp or the given prompt (for now). Nevertheless also multiple instances of `birdsdb` relying on the same data foundation is possible. Therefore those instances can be run in *synced mode* in which each database instance watches for changes in the filesystem and reacts with adding those to its in-memory database-state copy. Because of the immutable approach of stored objects, falsely repeatedly detected changes of the same data objects, or even older mutations get processed correctly, so that the state of each of the running instances is not in danger at any time.
-- **self-managed approach:** While during a mutation process of a data object, `birdsdb` directly write those changes to the file system, to prevent inconsistencies in the data foundation, those single mutations encapsulated in a single file will slow down the startup time of a database instance over time and also produce slidely more io operations as needed. Therefore the database tries to manage it self at several parts of the application. One of those self-managed processes is to summarize the changes written as single encapsulated mutations. By keeping track of the mutations and reacting at a predefined amount of their file representation, the self-managed process summarize those mutation in a file consisting that fixed amount of data objects in a so called *chunk*. As said before chunk enable a more pesistent and less resource consuming inital startup of an database instance as well as in the *sync mode*.
+- **self-managed approach:** While during a mutation process of a data object, `birdsdb` directly write those changes to the file system, to prevent inconsistencies in the data foundation, those single mutations encapsulated in a single file will slow down the startup time of a database instance over time and also produce slidely more io operations as needed. Therefore the database tries to manage it self at several parts of the application. One of those self-managed processes is to summarize the changes written as single encapsulated mutations. By keeping track of the mutations and reacting at a predefined amount of their file representation, the self-managed process summarize those mutation in a file consisting that fixed amount of data objects in a so called *chunk*. As said before chunking enables a more pesistent and less resource consuming inital startup process of an `birdsdb` database instance.
 
 ![doc/blueprint_db.jpg](doc/blueprint_db.jpg)
 
@@ -40,13 +40,24 @@ When `birdsdb` is compiled and started as a jar the defined base config in `proj
 java -Dconfig="path/to/my/config.edn" -jar target/birdsdb.jar
 ```
 
-In development the base config path can be changed in the `project.clj` declaration.
+In development the base config path can be changed in the `project.clj` declaration or the config file itselfs can be modifed to your own needs.
 
-... this section will be completed soon ...
+All information about available options and their meanings are listed in the *Options* section.
 
 ## Options
 
-... this section will be completed soon ...
+To configure a `birdsdb` instance and enabling or disabling several features either a config file or the according command line parameters can be used.
+
+When using a config file to configure an instance, the system relies on the [config](https://github.com/yogthos/config) package to manage several ways and layers of doing so.
+
+The easiest way to configure an `birsdb` instance in development is to either change the existing config file under `env/dev/config.edn` or link a modified copy of that file and its path in the `project.clj`.
+In production you can follow the instructions in the *Usage* section.
+
+In the following all available options to configure an instance with such a config file are listed below, side-by-side with the according command line parameters.
+
+| Option | Meaning | config parameter | cli parameter |
+| ------ | ------- | ---------------- | ------------- |
+
 
 ## Examples
 
@@ -55,7 +66,7 @@ In development the base config path can be changed in the `project.clj` declarat
 ## Roadmap
 
 - [x] edn-based chunk watcher
-- [ ] fully integrate sync-mode over file based changes
+- [x] fully integrate sync-mode over file based changes
 - [ ] sync-mode based on inter-process communication
 - [ ] finishing redundancy feature
 - [ ] possibility to scale up instances by intelligent chunking of contents across multiple instances
