@@ -2,7 +2,7 @@
   (:require [clojure.spec.alpha :as s]
             [birdsdb.logger.logger :as log]
             [birdsdb.db.io :as io]
-            [birdsdb.db.chunker :as chunker]))
+            [config.core :refer [env]]))
 
 (def db (ref {}))
 
@@ -20,19 +20,21 @@
     [id (assoc {} :id id :ts ts :deleted deleted :object object)]))
 
 (defn init!
-  ([]
-   (init! io/db-path))
-  ([db-path]
-   (let [current-state (io/receive-current-state db-path)]
-     (dosync
-      (ref-set db {})
-      (alter db into (for [[id db-entry] current-state]
-                       [id db-entry]))))
-    (chunker/watch-collector db-path)))
+  [db-path]
+  (let [current-state (io/receive-current-state db-path)]
+    (dosync
+     (log/log :info "resetting in memory db")
+     (ref-set db {})
+     (log/log :info "parsing existing data to in memory db")
+     (alter db into (for [[id db-entry] current-state]
+                      [id db-entry])))))
 
 (defn add!
   ([entry]
-   (add! entry {:io true :db-path io/db-path}))
+   (add! entry {:io true :db-path (-> env
+                                      :db
+                                      :io
+                                      :db-path)}))
   ([entry options]
    (let [[id db-entry] (create-db-entry entry)
          deleted (:deleted db-entry)]
@@ -41,6 +43,7 @@
                          :io)
                  (io/save (-> options
                               :db-path) [db-entry]))
+               (log/log :info "processing db-entry to in memory db")
                (dosync (if deleted
                          (alter db dissoc db id)
                          (alter db assoc id db-entry)))

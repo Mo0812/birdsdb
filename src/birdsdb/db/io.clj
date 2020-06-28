@@ -1,12 +1,8 @@
 (ns birdsdb.db.io
   (:require [clojure.java.io :as io]
             [birdsdb.logger.logger :as log]
-            [config.core :refer [env]]))
-
-(def db-path (-> env
-                 :db
-                 :io
-                 :db-path))
+            [birdsdb.db.specs :as bdb-specs]
+            [clojure.spec.alpha :as s]))
 
 (def protocol (atom #{}))
 
@@ -17,9 +13,12 @@
   (clojure.string/replace (.getName file) #"[.][^.]+$" ""))
 
 (defn read-file [file]
-  (log/log :info "reading:" file)
-  (swap! protocol conj (decompose-filename file))
-  (read-string (slurp file)))
+  (let [file (io/file file)
+        file-dump (read-string (slurp file))]
+    (when (s/valid? ::bdb-specs/file-dump file-dump)
+      (log/log :info "reading:" file)
+      (swap! protocol conj (decompose-filename file))
+      file-dump)))
 
 (defn read-db [path]
   (flatten (for [f (file-seq (io/file path))

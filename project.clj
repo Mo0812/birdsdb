@@ -18,4 +18,5 @@
   :target-path "target/%s"
   :jvm-options ["Xms128m" "-Xmx2g"]
   :profiles {:uberjar {:aot :all}
-             :dev {:resource-paths ["env/dev/config"]}})
+             :dev {:resource-paths ["env/dev/config"]}
+             :test {:resource-paths ["env/test/config"]}})

@@ -1,6 +1,6 @@
-{:logging {:enabled? true
+{:logging {:enabled? false
            :clean-logs? true
-           :print-logs? true
+           :print-logs? false
            :write-logs? false
            :output-path "db.log"
            :output-level :debug}
