@@ -55,21 +55,26 @@ In production you can follow the instructions in the *Usage* section.
 
 In the following all available options to configure an instance with such a config file are listed below, side-by-side with the according command line parameters.
 
-| Category | Option | Meaning | config parameter | cli parameter | default value |
-| ------ | ----- | ------- | ---------------- | ------------- | ----- |
-| logging | enabled? |  | `(-> env :logging :enabled?)` | - | false |
-| logging | print-logs? | | `(-> env :logging :print-logs?)` | - | false |
-| logging | write-logs? | | `(-> env :logging :write-logs)` | - | false |
-| logging | output-path | | `(-> env :logging :output-path)` | - | ”db.log“ |
-| logging | output-level | | `(-> env :logging :output-level)` | - | :debug |
-| ––––– | ––––– | ––––– | ––––– | ––––– | ––––– |
-| db | db-path | | `(-> env :db :io :db-path)` | - | “db“ |
-| db | chunk-enabled? | | `(-> env :db :chunker :enabled?)` | - | false |
-| db | chunk-size | | `(-> env :db :chunker :chunk-size)` | - | 2 |
-| db | sync-enabled? | | `(-> env :db :sync :enabled?)` | - | false |
-| ––––– | ––––– | ––––– | ––––– | ––––– | ––––– |
-| server | port | | `(-> env :server :port)` | - | 50937 |
+### Options via `config.edn`
 
+| Category | Option | Meaning | config parameter | default value |
+| ------ | ----- | ------- | ---------------- | ----- |
+| logging | enabled? |  | `(-> env :logging :enabled?)` | `false` |
+| logging | print-logs? | | `(-> env :logging :print-logs?)` |`false` |
+| logging | write-logs? | | `(-> env :logging :write-logs)` | `false` |
+| logging | output-path | | `(-> env :logging :output-path)` | `”db.log“` |
+| logging | output-level | | `(-> env :logging :output-level)` | `:debug` |
+| ––––– | ––––– | ––––– | ––––– | ––––– |
+| db | db-path | | `(-> env :db :io :db-path)` | `“db“` |
+| db | chunk-enabled? | | `(-> env :db :chunker :enabled?)` | `false` |
+| db | chunk-size | | `(-> env :db :chunker :chunk-size)` | `2` |
+| db | sync-enabled? | | `(-> env :db :sync :enabled?)` | `false` |
+| ––––– | ––––– | ––––– | ––––– | ––––– |
+| server | port | | `(-> env :server :port)` | `50937` |
+
+### Options via command line
+
+...
 
 ## Examples
 
