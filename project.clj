@@ -11,7 +11,8 @@
                  [juxt/dirwatch "0.2.5"]
                  [org.clojure/tools.cli "1.0.194"]
                  [criterium "0.4.5"]
-                 [clansi "1.0.0"]]
+                 [clansi "1.0.0"]
+                 [org.bouncycastle/bcpkix-jdk15on "1.53"]]
   :main ^:skip-aot birdsdb.core
   :repl-options {:init-ns birdsdb.core
                  :init (-main)}
