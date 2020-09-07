@@ -45,6 +45,12 @@
 (defn receive-all [path]
   (group-by :id (read-db path)))
 
+(defn receive-specific-state [ts path]
+  (into {} (for [[id revisions] (receive-all path)
+                 :let [last-matching-entry ((sort-by :ts revisions))]
+                 :when (not (= (:deleted current-entry) true))]
+             [id current-entry])))
+
 (defn receive-current-state [path]
   (into {} (for [[id revisions] (receive-all path)
                  :let [current-entry (last (sort-by :ts revisions))]

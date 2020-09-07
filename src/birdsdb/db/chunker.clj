@@ -29,8 +29,7 @@
         (log/log :info "deleting:" file-id)
         (io/delete-file (io/file path (bdb-io/compose-filename file-id))))
       (catch java.io.FileNotFoundException e
-        (swap! collector update :relevant #(
-                                            conj % chunk))
+        (swap! collector update :relevant #(conj % chunk))
         (log/log :error e))
       (catch Exception e
         (log/log :error "Can not write" (pr-str chunk) "in chunk")
@@ -47,8 +46,8 @@
                                                  (not (clojure.string/starts-with? % "chunk-"))
                                                  (not (contains? (:processed @collector) %))) new-state)]
                     (swap! collector update :relevant #(apply conj % relevant-state))
-                    (println "relevant:" relevant-state)
-                    (println "current collector" @collector)
+                    (log/log :info "relevant:" relevant-state)
+                    (log/log :info "current collector" @collector)
                     (when (> (count (:relevant @collector)) chunk-size)
                       (let [new-chunk (take chunk-size (:relevant @collector))
                             rest (drop chunk-size (:relevant @collector))]

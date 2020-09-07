@@ -49,3 +49,6 @@
                          (alter db assoc id db-entry)))
                (catch Exception e
                  (log/log :error e)))))))
+
+(defn time-travel! [ts]
+  (println "traveling to" ts))

@@ -1,4 +1,4 @@
-{:logging {:enabled? true
+{:logging {:enabled? false
            :clean-logs? true
            :print-logs? true
            :write-logs? false
@@ -7,5 +7,5 @@
  :db {:io {:db-path "db"}
       :chunker {:chunk-size 2
                 :enabled? true}
-      :sync {:enabled? true}}
+      :sync {:enabled? false}}
  :server {:port 50937}}

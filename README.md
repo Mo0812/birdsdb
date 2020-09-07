@@ -93,13 +93,15 @@ java -Dconfig="path/to/my/config.edn" -jar target/birdsdb.jar --server --port 12
 
 -   [x] edn-based chunk watcher
 -   [x] fully integrate sync-mode over file based changes
+-   [ ] time travel to former states of stored information
+-   [ ] use of advanced caching strategies to optimize the in-memory database part
 -   [ ] sync-mode based on inter-process communication
 -   [ ] finishing redundancy feature
 -   [ ] possibility to scale up instances by intelligent chunking of contents across multiple instances
 -   [ ] create query syntax for accessing data from prompt and server interface
 -   [ ] performance testing
 -   [ ] developing testing further
--   [ ] encryption based on end-to-end communication and implementing decent user right management thereby
+-   [ ] ~~encryption based on end-to-end communication and implementing decent user right management thereby~~
 
 ## Bugs
 
