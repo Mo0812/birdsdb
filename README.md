@@ -1,5 +1,3 @@
-![](https://github.com/Mo0812/birdsdb/workflows/Test/badge.svg)
-
 # birdsdb
 
 ![doc/birdsdb_logo.png](doc/birdsdb_logo_boxed.jpg)
@@ -16,7 +14,9 @@ A complete list of the features is listed below.
 
 ## Installation
 
-For now, `birdsdb` is in a early development stage, so you can only clone and integrate it in your project. While the project is making more progress, this section gets updated.
+For now, `birdsdb` is in a early development stage, so it is not recommended to use it in production in any way! If you still want to test, improve or use it, you can clone this repository and integrate it in your project by copying the `src` and `env` folder.
+
+While the project is making more progress, this section gets updated.
 
 > More information coming soon...
 
