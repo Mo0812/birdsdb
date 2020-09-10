@@ -4,7 +4,7 @@
            :write-logs? false
            :output-path "db.log"
            :output-level :debug}
- :db {:io {:db-path "db"}
+ :db {:io {:db-path "db/test"}
       :chunker {:chunk-size 2
                 :enabled? true}
       :sync {:enabled? true}}
