@@ -93,7 +93,7 @@ java -Dconfig="path/to/my/config.edn" -jar target/birdsdb.jar --server --port 12
 
 -   [x] edn-based chunk watcher
 -   [x] fully integrate sync-mode over file based changes
--   [ ] time travel to former states of stored information
+-   [x] time travel to former states of stored information
 -   [ ] use of advanced caching strategies to optimize the in-memory database part
 -   [ ] sync-mode based on inter-process communication
 -   [ ] finishing redundancy feature
